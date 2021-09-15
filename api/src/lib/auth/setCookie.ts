@@ -1,5 +1,5 @@
 import { CookieOptions, Response } from "express";
-import { COOKIE_NAME } from "lib/withAuth";
+import { COOKIE_NAME } from "lib/auth/withAuth";
 
 const COOKIE_EXPIRES = 60 * 60 * 1000 * 1;
 

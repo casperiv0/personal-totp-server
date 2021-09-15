@@ -1,10 +1,12 @@
+import { validateSchema } from "@casper124578/utils";
 import { compareSync } from "bcryptjs";
 import { Response, Router } from "express";
 import { createSessionToken } from "lib/auth/createSessionToken";
 import { setCookie } from "lib/auth/setCookie";
 import { getUser } from "lib/getUser";
 import { prisma } from "lib/prisma";
-import { withAuth } from "lib/withAuth";
+import { withAuth } from "lib/auth/withAuth";
+import { authenticateSchema } from "src/schemas";
 import { IRequest } from "types/IRequest";
 
 const router = Router();
@@ -12,9 +14,10 @@ const router = Router();
 router.post("/", async (req: IRequest, res: Response) => {
   const { username, password } = req.body;
 
-  if (!username || !password) {
-    // todo: setup yup validation
-    return res.status(400).send();
+  const [error] = await validateSchema(authenticateSchema, req.body);
+
+  if (error) {
+    return res.status(400).json({ error: error.message, errors: error.errors });
   }
 
   const user = await prisma.user.findUnique({

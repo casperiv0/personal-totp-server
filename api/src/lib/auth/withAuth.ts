@@ -1,7 +1,7 @@
 import { NextFunction, Response } from "express";
 import jwt from "jsonwebtoken";
 import { IRequest } from "types/IRequest";
-import { getUser } from "./getUser";
+import { getUser } from "../getUser";
 
 export const COOKIE_NAME = "personal-totp-session";
 

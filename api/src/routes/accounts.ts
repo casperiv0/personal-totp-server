@@ -1,7 +1,7 @@
 import { validateSchema } from "@casper124578/utils";
 import { Router } from "express";
 import { prisma } from "lib/prisma";
-import { withAuth } from "lib/withAuth";
+import { withAuth } from "lib/auth/withAuth";
 import { createAccountSchema } from "src/schemas";
 import { IRequest } from "types/IRequest";
 
@@ -12,7 +12,7 @@ router.get("/", (_, res) => {
 });
 
 router.post("/", withAuth, async (req: IRequest, res) => {
-  const { secret } = req.body;
+  const { secret, name } = req.body;
 
   const [error] = await validateSchema(createAccountSchema, req.body);
 
@@ -25,6 +25,7 @@ router.post("/", withAuth, async (req: IRequest, res) => {
   const account = await prisma.account.create({
     data: {
       secret,
+      name,
       userId: req.userId!,
     },
   });

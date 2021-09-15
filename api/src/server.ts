@@ -18,12 +18,3 @@ app.use("/api/v1", apiRouter, csurf({ cookie: true }));
 
 app.disable("x-powered-by");
 app.listen(parseInt(process.env["API_PORT"]!), () => console.log("ONLINE!"));
-
-// function generateOne() {
-
-//   totp.options = { digits: 6 };
-
-//   const token = authenticator.generate(SECRET);
-//   console.log(token);
-// }
-// generateOne();

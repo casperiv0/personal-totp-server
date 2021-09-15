@@ -1,5 +1,5 @@
 import * as React from "react";
-import { authenticate } from "lib/auth";
+import { authenticate } from "lib/actions";
 import auth from "styles/auth.module.scss";
 import form from "styles/form.module.scss";
 import { useRouter } from "next/dist/client/router";

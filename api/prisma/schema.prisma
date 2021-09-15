@@ -17,6 +17,7 @@ model User {
 model Account {
     id     String @unique @default(uuid())
     secret String
+    name   String
     user   User   @relation(fields: [userId], references: [id])
     userId String
 }
