@@ -9,10 +9,5 @@ export function setCookie(token: string, res: Response) {
     expires: new Date(Date.now() + COOKIE_EXPIRES),
   };
 
-  if (process.env["NODE_ENV"] === "production") {
-    options.sameSite = "lax";
-    options.secure = true;
-  }
-
   res.cookie(COOKIE_NAME, token, options);
 }

@@ -2,7 +2,9 @@ import { compareSync } from "bcryptjs";
 import { Response, Router } from "express";
 import { createSessionToken } from "lib/auth/createSessionToken";
 import { setCookie } from "lib/auth/setCookie";
+import { getUser } from "lib/getUser";
 import { prisma } from "lib/prisma";
+import { withAuth } from "lib/withAuth";
 import { IRequest } from "types/IRequest";
 
 const router = Router();
@@ -40,6 +42,12 @@ router.post("/", async (req: IRequest, res: Response) => {
   setCookie(token, res);
 
   return res.json({ userId: user.id });
+});
+
+router.post("/user", withAuth, async (req: IRequest, res: Response) => {
+  const user = await getUser(req.userId!);
+
+  return res.json({ user });
 });
 
 export const authRouter = router;
