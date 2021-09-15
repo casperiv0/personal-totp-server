@@ -1,0 +1,19 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+
+    "outDir": "dist",
+    "strict": true,
+    "lib": ["esnext"],
+    "baseUrl": ".",
+    "paths": {
+      "lib/*": ["./src/lib/*"],
+      "utils/*": ["./src/utils/*"],
+      "types/*": ["./src/types/*"]
+    }
+  }
+}
