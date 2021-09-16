@@ -41,7 +41,7 @@ export default function Index({ user }: Props) {
       {accounts.length <= 0 ? (
         <p>You do not have any accounts yet.</p>
       ) : (
-        accounts.map((account) => <AccountItem key={account.secret} account={account} />)
+        accounts.map((account) => <AccountItem key={account.id} account={account} />)
       )}
 
       <button onClick={() => setOpen(true)}>OPen</button>

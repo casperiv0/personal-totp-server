@@ -12,25 +12,45 @@ router.get("/", (_, res) => {
 });
 
 router.post("/", withAuth, async (req: IRequest, res) => {
-  const { secret, name } = req.body;
+  try {
+    const { secret, name } = req.body;
 
-  const [error] = await validateSchema(createAccountSchema, req.body);
+    const [error] = await validateSchema(createAccountSchema, req.body);
 
-  if (error) {
-    return res.status(400).json({
-      error: error.message,
+    if (error) {
+      return res.status(400).json({
+        error: error.message,
+      });
+    }
+
+    const account = await prisma.account.create({
+      data: {
+        secret,
+        name,
+        userId: req.userId!,
+      },
     });
+
+    return res.json({ account });
+  } catch (e) {
+    console.error(e);
+    return res.status(500).send();
   }
+});
 
-  const account = await prisma.account.create({
-    data: {
-      secret,
-      name,
-      userId: req.userId!,
-    },
-  });
+router.delete("/:accountId", withAuth, async (req: IRequest, res) => {
+  try {
+    await prisma.account.delete({
+      where: {
+        id: req.params.accountId,
+      },
+    });
 
-  return res.json({ account });
+    return res.status(200).send();
+  } catch (e) {
+    console.error(e);
+    return res.status(500).send();
+  }
 });
 
 export const accountsRouter = router;
